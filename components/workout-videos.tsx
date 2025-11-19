@@ -384,10 +384,6 @@ export function WorkoutVideos() {
           </div>
         </div>
 
-        <h3 className="text-2xl md:text-3xl text-center mb-8">
-          <span className="font-bold text-black">{selectedCategory}</span>
-        </h3>
-
         {filteredVideos.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-xl text-gray-600">

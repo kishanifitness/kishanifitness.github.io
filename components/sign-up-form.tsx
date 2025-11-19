@@ -26,6 +26,21 @@ export function SignUpForm() {
     instagram: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null
+    message: string
+  }>({ type: null, message: '' })
+
+  const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScmZ1wEKBcO_9Gccl0tCtAGig6VCiuULQsJjJxKcILYwm5ttQ/formResponse'
+  
+  const FIELD_IDS = {
+    goal: 'entry.2038218655',
+    gender: 'entry.1483009977',
+    ageGroup: 'entry.1903635743',
+    name: 'entry.265379145',
+    email: 'entry.580166004',
+    instagram: 'entry.1495233114',
+  }
 
   const goals = [
     'Build Muscle',
@@ -42,33 +57,43 @@ export function SignUpForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus({ type: null, message: '' })
+
+    const googleFormData = new FormData()
+    googleFormData.append(FIELD_IDS.goal, formData.goal)
+    googleFormData.append(FIELD_IDS.gender, formData.gender)
+    googleFormData.append(FIELD_IDS.ageGroup, formData.ageGroup)
+    googleFormData.append(FIELD_IDS.name, formData.name)
+    googleFormData.append(FIELD_IDS.email, formData.email)
+    googleFormData.append(FIELD_IDS.instagram, formData.instagram)
 
     try {
-      const response = await fetch('/api/submit-form', {
+      await fetch(GOOGLE_FORM_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: googleFormData,
+        mode: 'no-cors',
       })
 
-      if (response.ok) {
-        alert('Thank you! We\'ll contact you within 24 hours.')
-        setFormData({
-          goal: '',
-          gender: '',
-          ageGroup: '',
-          name: '',
-          email: '',
-          instagram: '',
-        })
-        setStep(1)
-      } else {
-        alert('Something went wrong. Please try again.')
-      }
+      setSubmitStatus({
+        type: 'success',
+        message: "Thank you! We'll contact you within 24 hours.",
+      })
+
+      setFormData({
+        goal: '',
+        gender: '',
+        ageGroup: '',
+        name: '',
+        email: '',
+        instagram: '',
+      })
+      setStep(1)
     } catch (error) {
-      console.error('[v0] Form submission error:', error)
-      alert('Something went wrong. Please try again.')
+      console.error('Form submission error:', error)
+      setSubmitStatus({
+        type: 'error',
+        message: 'Sorry, there was an error. Please try again or contact us directly.',
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -86,11 +111,23 @@ export function SignUpForm() {
         />
       </div>
 
+      {submitStatus.type && (
+        <div
+          className={`p-4 rounded-lg ${
+            submitStatus.type === 'success'
+              ? 'bg-green-100 text-green-800 border border-green-200'
+              : 'bg-red-100 text-red-800 border border-red-200'
+          }`}
+        >
+          {submitStatus.message}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Step 1: Fitness Goals */}
         {step === 1 && (
           <div className="space-y-4 animate-fadeIn">
-            <h3 className="text-2xl font-bold text-black md:text-black text-shadow-sm">
+            <h3 className="text-2xl font-bold text-black text-shadow-sm">
               What's your primary goal?
             </h3>
             <div className="grid grid-cols-1 gap-3">
