@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Play, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Play, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 type Video = {
@@ -9,6 +9,7 @@ type Video = {
   title: string
   category: string
   videoUrl: string
+  description?: string
   thumbnail?: string
 }
 
@@ -18,94 +19,143 @@ export function WorkoutVideos() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({})
   const [currentPage, setCurrentPage] = useState(1)
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
   const videosPerPage = 6
 
-  const categories = ['All', 'Full body', 'Recipes']
-
+  const categories = ['All', 'Full body Workouts', 'Push Workouts', 'Leg Workouts', 'Recipe']
   const videos: Video[] = [
     {
       id: '1',
       title: 'Cinnamon Swirl Protein Pancakes',
       category: 'Recipe',
       videoUrl: '/videos/Cinnamon Swirl Protein Pancakes.mp4',
+      description: 'SIMPLE Protein Pancake Recipe🥞\n\nHappy Sunday! There’s no better way to start your morning than with protein-packed pancakes!\n\n@catalyst.supps Cinnamon Swirl Protein Pancakes:\n\nIngredients:\n- 2 Eggs✅\n- 1 Cup Plain Greek Yogurt\n- 1 Cup Oats (blended)✅\n- 1 Tbsp Baking Soda✅\n- 2 Tbsp Ground Cinnamon✅\n- 1 Tbsp Coconut Oil✅\n- 2 Scoops Catalyst Cinnamon Swirl Protein Powder✅\n- 2 Cups Almond Flour\n\nTop them off however you like — make it look pretty 🤩\n\nSave & Share so you can start your Sunday off right🔥'
     },
     {
       id: '2',
       title: 'Filet Mignon',
       category: 'Recipe',
       videoUrl: '/videos/Filet Mignon.mp4',
+      description: 'My way of cooking my Filet Mignon steak🔥\n\nHere are some tips when cooking steak on a cast iron skillet:\n\n• Preheat the pan: Start with a hot skillet🔥\n• Season the meat: Apply your favorite rub before cooking for maximum flavor👌🏽\n• Add butter: Toss in some butter near the end to baste the steak and boost richness🧈\n• Let it rest: After cooking, let your steak rest for 5–10 minutes to lock in the juices😮‍💨\n• Adjust the heat: Start with high heat for that crispy crust, then lower to medium-low to finish perfectly🔥\n• Warm the meat: Let the steak reach room temperature before cooking for extra tenderness👌🏽\n\nTry this method for a juicy, flavorful Filet Mignon every time.\n\nSave this for your next cook-up and share it with someone who loves steak!😋🥩\n\nLet me know how yours turns out!🔥'
     },
     {
       id: '3',
       title: 'LC BBQ Chicken Pizza',
       category: 'Recipe',
       videoUrl: '/videos/LC BBQ Chicken Pizza.mp4',
+      description: '🍕LOW CARB BBQ CHICKEN PIZZA🐓\n\nInspired by the great @stevehochman.driven 🔥\n\nUsing almond flour has completely transformed my diet. It lets me enjoy plenty of low-carb alternatives while staying lean — and the best part, I can eat more without feeling bloated👌🏽\n\nBenefits of using almond flour:\n- Gluten Friendly\n- Nutrient-Rich\n- High in Protein\n- Low Carb\n- Versatile to cook with\n- Keto Friendly\n\nThis pizza recipe is incredibly quick — you can make it in just 30 minutes! Give it a try and see how it turns out 😋🔥'
     },
     {
       id: '4',
       title: 'LC pizza',
       category: 'Recipe',
       videoUrl: '/videos/LC pizza.mp4',
+      description: 'Craving pizza all weekend? 🍕\n\nHere’s your last chance to enjoy it without the guilt.\n\nWith 24g of protein per slice and only 600 calories for the entire pizza 🤔🔥\n\nSave✅ this low-carb, high-protein pizza recipe ⬇️⬇️⬇️\n\nIngredients:\n- 1 Egg\n- 2 Scoops Almond Flour\n- 1 Cup Plain Greek Yogurt\n(Mix all together)\n\nSpread your dough on a pizza pan — keep applying flour as you shape it.\nCook the crust at 400°F for 10–12 minutes.\n\nNow add your toppings🔥🔥\nI used:\n- Pizza sauce (tomato sauce)\n- Genoa Salami\n- Pepperoni\n- Lean Ground Beef\n- Cherry Tomatoes\n- White Onions\n- Chopped Garlic\n- Mushrooms\n- Shredded Cheese\n\nBake for 14 minutes at 400°F.\n\nIf you’re feeling adventurous, add fresh basil on top for an even brighter flavor 🍃🌱'
     },
     {
       id: '5',
       title: 'LC protein banana bread',
       category: 'Recipe',
       videoUrl: '/videos/LC protein banana bread.mp4',
+      description: 'LOW CARB PROTEIN 🍌🍞\n\nIngredients:\n- 2 Cups Almond Flour\n- 2 Scoops Vanilla Isolate Protein\n- 1 Cup Greek Yogurt\n- 2 Eggs\n- 2 Ripe Bananas\n- 1 Tbsp Vanilla Extract\n- 1/2 Tbsp Baking Soda\n- 1/2 Cup Peanut Butter Chips\n- 1/2 Tbsp Salt\n- 3 Tbsp Chia Seeds\n\nThis is a GREAT low-carb substitute for regular banana bread 😇\n\nYou HAVE to try this!!\n\nMake sure to SAVE & SHARE this simple recipe — and feel free to add your own charm to it 😉❤️'
     },
     {
       id: '6',
       title: 'Strawberry Italian Ice Protein bowl',
       category: 'Recipe',
       videoUrl: '/videos/Strawberry Italian Ice Protein bowl.mp4',
+      description: 'Using @1upnutrition Strawberry Italian Ice Clear Protein I was able to make the most simple post workout protein bowl with over 35 grams of protein in each bowl🔥🔥\n\nIngredients:\n\n-1 Cup Greek Yohgurt\n-1 Scoop of Strawberry Italian Ice Clear Protein by @1upnutrition\n-Strawberries\n-1/2 a Banana\n-Pecans\n-Crushed Walnuts\n-Organic Raw Honey\n-Hersheys 0 Sugar chocolate syrup\n\nThis is way more refreshing then a regular protien shake post workout.\n\nIf you don\'t save and share this with someone who struggles with taking in protein post workout, you ALL are missing out 👋🏽\n\nLet me know how it tastes 😋\n\nBecome better with @1upnutrition !\n\nUSE CODE: Kian20 when ordering'
     },
     {
       id: '7',
       title: 'Super bowl snack',
       category: 'Recipe',
       videoUrl: '/videos/Super bowl snack.mp4',
+      description: 'Need a Last Minute Super Bowl Snack? ⏲️\n\nNeed a delicious, high-protein dish to bring to your Super Bowl party? I got you.\n\nMacros per serving (makes 12 servings):\n- Cals: 380\n- Fat: 16g\n- Carbs: 25g\n- Protein: 37g\n\nTip: Split the beef and chicken in half in the dish so guests can choose their preference.\n\nIngredients:\n- 2 lbs lean ground beef (95/5)\n- 2 lbs ground chicken\n- 2 servings taco seasoning\n- 16 oz plain fat-free Greek yogurt\n- 16 oz refried beans\n- 8 oz shredded Mexican blend cheese\n- 8 oz guacamole of choice\n- 8 oz chunky salsa of choice\n- 16 oz shredded cabbage OR lettuce\n\nInstructions:\n1. Cook ground beef over medium-high heat & drain fat onto a paper towel.\n2. Add 1/2 cup water to ground beef and evenly mix taco seasoning into both the beef and chicken.\n3. Remove seasoned beef from heat and let it cool.\n4. In a bowl, mix Greek yogurt and taco seasoning until fully combined.\n5. MAKE SURE to lick the spoon 🤣\n6. Spread the yogurt mixture evenly along the bottom of a glass serving dish.\n7. Add refried beans — stir well before spreading to avoid lumps!\n8. Remove tray from the refrigerator & layer your ground chicken, beef, refried beans, peppers, tomato, half your shredded cabbage or lettuce, cheese, guacamole, salsa, and the remaining shredded cheese.\n9. You did it. YOU ARE THE MVP of the party 🥇\n\nThis high-protein dish will set the tone for the Super Bowl.\n\nI know the swiftys are excited 🤣\n\nA MUST try!'
     },
     {
       id: '8',
       title: 'Full body friday workout',
-      category: 'Full body',
+      category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout.mp4',
     },
     {
       id: '9',
       title: 'Full body friday workout v2',
-      category: 'Full body',
+      category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout v2.mp4',
     },
     {
       id: '10',
       title: 'Full body friday workout v3',
-      category: 'Full body',
+      category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout v3.mp4',
     },
     {
       id: '11',
       title: 'Full body friday workout v4',
-      category: 'Full body',
+      category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout v4.mp4',
     },
     {
       id: '12',
       title: 'Full body weekend workout',
-      category: 'Full body',
+      category: 'Full body Workouts',
       videoUrl: '/videos/Full body weekend workout.mp4',
     },
     {
       id: '13',
       title: 'KB Full body workout',
-      category: 'Full body',
+      category: 'Full body Workouts',
       videoUrl: '/videos/KB Full body friday workout.mp4',
     },
     {
       id: '14',
       title: 'Med Ball Full body workout',
-      category: 'Full body',
+      category: 'Full body Workouts',
       videoUrl: '/videos/Med Ball Full body workout.mp4',
+    },
+    {
+      id: '15',
+      title: 'Crazy shoulder blast',
+      category: 'Push Workouts',
+      videoUrl: '/videos/Crazy shoulder blast.mp4',
+    },
+    {
+      id: '16',
+      title: 'Upper body workout',
+      category: 'Push Workouts',
+      videoUrl: '/videos/Upper body workout.mp4',
+    },
+    {
+      id: '17',
+      title: 'Strict Chest Workout',
+      category: 'Push Workouts',
+      videoUrl: '/videos/Strict Chest Workout.mp4',
+    },
+    {
+      id: '18',
+      title: 'DB Upper Body Workout',
+      category: 'Push Workouts',
+      videoUrl: '/videos/DB Upper Body Workout.mp4',
+    },
+    {
+      id: '19',
+      title: 'KB Leg Circuit',
+      category: 'Leg Workouts',
+      videoUrl: '/videos/KB Leg Circuit.mp4',
+    },
+    {
+      id: '20',
+      title: 'Leg day workout',
+      category: 'Leg Workouts',
+      videoUrl: '/videos/Leg day workout.mp4',
+    },
+    {
+      id: '21',
+      title: 'Underated leg day finisher',
+      category: 'Leg Workouts',
+      videoUrl: '/videos/Underated leg day finisher.mp4',
     }
   ]
 
@@ -119,16 +169,22 @@ export function WorkoutVideos() {
           videoElement.src = video.videoUrl
           videoElement.crossOrigin = 'anonymous'
           videoElement.muted = true
+          videoElement.preload = 'metadata'
 
           await new Promise<void>((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+              reject(new Error('Timeout loading video'))
+            }, 5000)
+
             videoElement.onloadedmetadata = () => {
+              clearTimeout(timeoutId)
               videoElement.currentTime = 1
             }
 
             videoElement.onseeked = () => {
               const canvas = document.createElement('canvas')
-              canvas.width = videoElement.videoWidth
-              canvas.height = videoElement.videoHeight
+              canvas.width = videoElement.videoWidth || 640
+              canvas.height = videoElement.videoHeight || 360
 
               const ctx = canvas.getContext('2d')
               if (ctx) {
@@ -139,11 +195,12 @@ export function WorkoutVideos() {
             }
 
             videoElement.onerror = () => {
-              reject(new Error(`Failed to load video: ${video.videoUrl}`))
+              clearTimeout(timeoutId)
+              resolve() // Resolve instead of reject to continue with other videos
             }
           })
         } catch (error) {
-          console.error(`Error extracting thumbnail for ${video.title}:`, error)
+          console.log(`[v0] Could not extract thumbnail for ${video.title}, using fallback`)
         }
       }
 
@@ -172,6 +229,7 @@ export function WorkoutVideos() {
   const handleVideoSelect = (video: Video) => {
     setSelectedVideo(video)
     setIsPlaying(true)
+    setIsDescriptionExpanded(false)
   }
 
   const getThumbnail = (videoId: string) => {
@@ -190,14 +248,24 @@ export function WorkoutVideos() {
     }
   }
 
+  const isLongDescription = (description?: string) => {
+    return description && description.length > 150
+  }
+
+  const getTruncatedDescription = (description?: string) => {
+    if (!description) return ''
+    if (description.length <= 150) return description
+    return description.substring(0, 150) + '...'
+  }
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-4">
-          Workout Videos
+          Fitness & Lifestyle Videos
         </h2>
         <p className="text-center text-gray-600 mb-12 text-lg">
-          Get a taste of the training style
+          Your go-to place for workout routines, recipe ideas, and lifestyle content that keeps you feeling great.
         </p>
 
         {/* Category Filter */}
@@ -252,10 +320,43 @@ export function WorkoutVideos() {
               </div>
             )}
           </div>
-          <h3 className="text-2xl font-bold text-black mt-4">
-            {featuredVideo.title}
-          </h3>
+          <div className="mt-4">
+            <h3 className="text-2xl font-bold text-black">
+              {featuredVideo.title}
+            </h3>
+            <p className="text-gray-600 mb-2">{featuredVideo.category}</p>
+            
+            {featuredVideo.description && (
+              <div className="mt-3">
+                <p className="text-gray-700 whitespace-pre-line">
+                  {isDescriptionExpanded
+                    ? featuredVideo.description
+                    : getTruncatedDescription(featuredVideo.description)}
+                </p>
+                {isLongDescription(featuredVideo.description) && (
+                  <button
+                    onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+                    className="mt-2 text-black font-semibold hover:underline flex items-center gap-1"
+                  >
+                    {isDescriptionExpanded ? (
+                      <>
+                        Show less <ChevronUp className="w-4 h-4" />
+                      </>
+                    ) : (
+                      <>
+                        Read more <ChevronDown className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </div>
+
+        <h3 className="text-2xl md:text-3xl text-center mb-8">
+          <span className="font-bold text-black">{selectedCategory}</span>
+        </h3>
 
         {filteredVideos.length === 0 ? (
           <div className="text-center py-12">
