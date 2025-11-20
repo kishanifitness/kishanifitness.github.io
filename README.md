@@ -264,29 +264,85 @@ After making your edits, follow these steps to publish them to your live website
 2. Look for white dots next to file names at the top - these indicate unsaved files
 3. Save each one
 
-### Step 2: Commit Your Changes
+### Step 2: Open the Terminal
 
-1. Click the Source Control icon on the left sidebar (it looks like a branch with three circles)
-2. You'll see a list of all files you changed
-3. In the message box at the top, type a description of what you changed
-   - Example: "Updated workout videos and program pricing"
-4. Click the checkmark button (✓) above the message box to commit
+1. In VS Code, go to the top menu and click **Terminal** → **New Terminal**
+2. A terminal window will appear at the bottom of VS Code
+3. Make sure you're in the correct folder (you should see your project name in the path)
 
-### Step 3: Push to GitHub
+### Step 3: Commit Your Changes Using Terminal
 
-1. Click the three dots (...) in the Source Control panel
-2. Select "Push" from the menu
-3. If prompted, enter your GitHub username and password
-   - **Note:** You may need to use a Personal Access Token instead of a password
-   - [How to create a token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+Type these commands one at a time, pressing Enter after each:
 
-### Step 4: Wait for Deployment
+#### 3a. Check what files changed
+\`\`\`bash
+git status
+\`\`\`
+This shows all the files you modified. Review them to make sure everything looks correct.
 
-1. Go to your repository on GitHub: [https://github.com/bodybykishani/bodybykishani.github.io](https://github.com/bodybykishani/bodybykishani.github.io)
-2. Click the "Actions" tab at the top
-3. You'll see a workflow running - this is your website being deployed
-4. Wait for the green checkmark (usually takes 2-5 minutes)
-5. Your changes are now live at [https://bodybykishani.github.io](https://bodybykishani.github.io)
+#### 3b. Add all your changes
+\`\`\`bash
+git add .
+\`\`\`
+The period (.) means "add all changed files". This stages your changes for commit.
+
+#### 3c. Commit with a message
+\`\`\`bash
+git commit -m "Updated workout videos and program pricing"
+\`\`\`
+Replace the text in quotes with a description of what you changed. Keep it short and clear.
+
+### Step 4: Push Your Changes to GitHub
+
+\`\`\`bash
+git push origin main
+\`\`\`
+
+If this is your first time, you may be asked to log in:
+- **Username:** Your GitHub username
+- **Password:** Use a Personal Access Token (NOT your GitHub password)
+  - To create a token: Go to GitHub.com → Settings → Developer settings → Personal access tokens → Generate new token
+  - Give it "repo" permissions
+  - Copy the token and paste it when prompted (you won't see it as you type)
+
+### Step 5: Deploy to GitHub Pages (Fast Method)
+
+Instead of waiting for GitHub Actions, use this command to deploy instantly:
+
+\`\`\`bash
+npm run deploy
+\`\`\`
+
+This command will:
+1. Build your website
+2. Upload it directly to GitHub Pages
+3. Your site will be live in about 30 seconds to 1 minute
+
+**That's it!** Your changes are now live at [https://bodybykishani.github.io](https://bodybykishani.github.io)
+
+---
+
+### Quick Deployment Checklist
+
+When you're ready to publish changes, just run these 4 commands in the terminal:
+
+\`\`\`bash
+git add .
+git commit -m "Your change description here"
+git push origin main
+npm run deploy
+\`\`\`
+
+**Pro Tip:** After you've logged in once with your Personal Access Token, Git will remember it, so future deployments only require these 4 commands.
+
+---
+
+### Verifying Your Deployment
+
+1. Wait 30-60 seconds after running `npm run deploy`
+2. Open your website: [https://bodybykishani.github.io](https://bodybykishani.github.io)
+3. If you don't see your changes immediately, press Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac) to hard refresh
+4. You can also open the site in an incognito/private window to see fresh changes
 
 ---
 
@@ -329,33 +385,6 @@ After making your edits, follow these steps to publish them to your live website
 
 ---
 
-## Quick Reference: Common Tasks
-
-### Add a Workout Video
-1. Put MP4 file in `public/videos/`
-2. Open `components/workout-videos.tsx`
-3. Add new entry to `videos` array
-4. Save, commit, and push
-
-### Change Program Price
-1. Open `components/programs.tsx`
-2. Find `featuredProgram` object
-3. Change `price` and `originalPrice`
-4. Save, commit, and push
-
-### Add a Transformation
-1. Put before/after images in `public/`
-2. Open `components/transformations.tsx`
-3. Add new entry to `transformations` array
-4. Save, commit, and push
-
-### Update Coach Video
-1. Replace `public/coach-intro.mp4` with your new video
-2. Replace `public/coach-video-thumbnail.jpg` with new thumbnail
-3. Commit and push
-
----
-
 ## Best Practices
 
 1. **Always save your work** before committing changes
@@ -379,7 +408,5 @@ If you get stuck:
    - What file you were editing
    - Any error messages you see
    - Screenshots of the problem
-
----
 
 **Remember:** It's okay to make mistakes! You can always revert changes or restore files. Take your time and follow the steps carefully.
