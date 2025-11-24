@@ -1,142 +1,110 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Card, CardContent } from "@/components/ui/card"
 
 type Transformation = {
   name: string
-  beforeImage: string
-  afterImage: string
+  image: string
   testimonial: string
+  stats?: string
 }
 
 export function Transformations() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
   const transformations: Transformation[] = [
     {
-      name: 'Mike Johnson',
-      beforeImage: '/images/overweight-man-before.png',
-      afterImage: '/images/fit-muscular-man-after.jpg',
-      testimonial:
-        'Working with Kian changed my life. The personalized approach and constant support helped me achieve results I never thought possible.',
+      name: "",
+      image: "/images/client-transformations-1.jpeg",
+      testimonial: ""
     },
     {
-      name: 'Sarah Williams',
-      beforeImage: '/images/woman-before-fitness.jpg',
-      afterImage: '/images/fit-toned-woman-after.jpg',
-      testimonial:
-        'I finally found a coach who understands my goals and lifestyle. The transformation speaks for itself, but the confidence I gained is priceless.',
+      name: "",
+      image: "/images/client-transformations-2.jpeg",
+      testimonial: ""
     },
     {
-      name: 'David Chen',
-      beforeImage: '/images/skinny-man-before.png',
-      afterImage: '/images/muscular-fit-man-after.jpg',
-      testimonial:
-        'From skinny to strong in 12 weeks. Kian\'s program gave me the structure and guidance I needed to build serious muscle.',
+      name: "",
+      image: "/images/client-transformations-3.jpeg",
+      testimonial: ""
+    },
+    {
+      name: "",
+      image: "/images/client-transformations-4.jpeg",
+      testimonial: ""
+    },
+    {
+      name: "Client",
+      image: "/images/client-transformations-5.jpeg",
+      testimonial: "Kian's guidance helped me break through plateaus and reach goals I'd been chasing for years.",
     },
   ]
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) =>
-      prev === transformations.length - 1 ? 0 : prev + 1
-    )
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? transformations.length - 1 : prev - 1
-    )
-  }
-
-  const current = transformations[currentIndex]
-
   return (
-    <section id="transformations" className="py-20 bg-gray-50">
+    <section id="transformations" className="py-20 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-4">
-          Real Results, Real People
-        </h2>
-        <p className="text-center text-gray-600 mb-16 text-lg">
-          See what's possible with dedicated coaching
-        </p>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4 uppercase tracking-tight">
+            Client Transformations
+          </h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Real people. Real results. See what's possible when you commit to the process.
+          </p>
+        </div>
 
-        <div className="max-w-5xl mx-auto">
-          <div className="relative">
-            {/* Transformation Display */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {/* Before Image */}
-              <div className="relative">
-                <div className="absolute top-4 left-4 bg-black text-white px-4 py-2 rounded font-bold z-10">
-                  BEFORE
-                </div>
-                <img
-                  src={current.beforeImage || "/placeholder.svg"}
-                  alt={`${current.name} before`}
-                  className="w-full h-[400px] md:h-[500px] object-cover rounded-lg shadow-lg"
-                />
-              </div>
+        <div className="relative">
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full max-w-6xl mx-auto"
+          >
+            <CarouselContent className="-ml-4 items-stretch py-10">
+              {transformations.map((item, index) => {
+                const hasTextContent = item.name || item.testimonial
 
-              {/* After Image */}
-              <div className="relative">
-                <div className="absolute top-4 left-4 bg-black text-white px-4 py-2 rounded font-bold z-10">
-                  AFTER
-                </div>
-                <img
-                  src={current.afterImage || "/placeholder.svg"}
-                  alt={`${current.name} after`}
-                  className="w-full h-[400px] md:h-[500px] object-cover rounded-lg shadow-lg"
-                />
-              </div>
-            </div>
+                return (
+                  <CarouselItem key={index} className="pl-4 basis-[90%] md:basis-[75%] lg:basis-[70%]">
+                    <div className="relative group transition-all duration-300 transform h-full">
+                      <Card className="border-none bg-white rounded-3xl overflow-hidden h-full flex flex-col">
+                        <CardContent className="p-0 flex flex-col h-full">
+                          <div
+                            className={
+                              hasTextContent
+                                ? "relative aspect-[4/3] md:aspect-[16/9] overflow-hidden shrink-0"
+                                : "relative w-full h-full overflow-hidden"
+                            }
+                          >
+                            <img
+                              src={item.image || "/placeholder.svg"}
+                              alt={`${item.name || "Client"} transformation`}
+                              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 max-h-[500px] md:max-h-[600px]"
+                            />
+                          </div>
 
-            {/* Testimonial */}
-            <div className="bg-white rounded-lg p-6 md:p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-black mb-3">
-                {current.name}
-              </h3>
-              <p className="text-lg text-gray-700 italic leading-relaxed text-pretty">
-                "{current.testimonial}"
-              </p>
-            </div>
+                          {hasTextContent && (
+                            <div className="p-6 md:p-8 flex flex-col flex-grow">
+                              <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-2">
+                                {item.name && <h3 className="font-bold text-2xl text-black">{item.name}</h3>}
+                              </div>
+                              {item.testimonial && (
+                                <p className="text-gray-600 text-base leading-relaxed italic flex-grow">
+                                  "{item.testimonial}"
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                )
+              })}
+            </CarouselContent>
 
-            {/* Navigation Arrows */}
-            <div className="flex justify-center gap-4 mt-8">
-              <Button
-                onClick={prevSlide}
-                size="lg"
-                variant="outline"
-                className="rounded-full w-14 h-14 p-0"
-                aria-label="Previous transformation"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </Button>
-              <Button
-                onClick={nextSlide}
-                size="lg"
-                variant="outline"
-                className="rounded-full w-14 h-14 p-0"
-                aria-label="Next transformation"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </Button>
-            </div>
-
-            {/* Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-4">
-              {transformations.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentIndex ? 'bg-black w-8' : 'bg-gray-300'
-                  }`}
-                  aria-label={`Go to transformation ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+            <CarouselPrevious className="left-2 md:left-[-60px] h-10 w-10 md:h-14 md:w-14 border-2 border-black bg-white/80 md:bg-transparent hover:bg-black hover:text-white transition-colors z-10" />
+            <CarouselNext className="right-2 md:right-[-60px] h-10 w-10 md:h-14 md:w-14 border-2 border-black bg-white/80 md:bg-transparent hover:bg-black hover:text-white transition-colors z-10" />
+          </Carousel>
         </div>
       </div>
     </section>
