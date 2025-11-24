@@ -1,5 +1,5 @@
 'use client'
-import { Instagram, Facebook, Twitter, Mail, Phone } from 'lucide-react'
+import { Instagram, Facebook, Twitter, Mail, Phone, Youtube, Icon } from 'lucide-react'
 
 export function Footer() {
   const scrollToSection = (id: string) => {
@@ -90,7 +90,7 @@ export function Footer() {
             <h4 className="font-bold mb-4">Follow Me</h4>
             <div className="flex gap-4">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/kianishani8/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
@@ -99,22 +99,13 @@ export function Footer() {
                 <Instagram size={24} />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.youtube.com/@kianishani8"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Facebook"
+                aria-label="Youtube"
               >
-                <Facebook size={24} />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter size={24} />
+                <Youtube size={24} />
               </a>
             </div>
           </div>
