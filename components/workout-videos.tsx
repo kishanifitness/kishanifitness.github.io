@@ -73,116 +73,122 @@ export function WorkoutVideos() {
       videoUrl: '/videos/Super bowl snack.mp4',
       description: 'Need a Last Minute Super Bowl Snack? ⏲️\n\nNeed a delicious, high-protein dish to bring to your Super Bowl party? I got you.\n\nMacros per serving (makes 12 servings):\n- Cals: 380\n- Fat: 16g\n- Carbs: 25g\n- Protein: 37g\n\nTip: Split the beef and chicken in half in the dish so guests can choose their preference.\n\nIngredients:\n- 2 lbs lean ground beef (95/5)\n- 2 lbs ground chicken\n- 2 servings taco seasoning\n- 16 oz plain fat-free Greek yogurt\n- 16 oz refried beans\n- 8 oz shredded Mexican blend cheese\n- 8 oz guacamole of choice\n- 8 oz chunky salsa of choice\n- 16 oz shredded cabbage OR lettuce\n\nInstructions:\n1. Cook ground beef over medium-high heat & drain fat onto a paper towel.\n2. Add 1/2 cup water to ground beef and evenly mix taco seasoning into both the beef and chicken.\n3. Remove seasoned beef from heat and let it cool.\n4. In a bowl, mix Greek yogurt and taco seasoning until fully combined.\n5. MAKE SURE to lick the spoon 🤣\n6. Spread the yogurt mixture evenly along the bottom of a glass serving dish.\n7. Add refried beans — stir well before spreading to avoid lumps!\n8. Remove tray from the refrigerator & layer your ground chicken, beef, refried beans, peppers, tomato, half your shredded cabbage or lettuce, cheese, guacamole, salsa, and the remaining shredded cheese.\n9. You did it. YOU ARE THE MVP of the party 🥇\n\nThis high-protein dish will set the tone for the Super Bowl.\n\nI know the swiftys are excited 🤣\n\nA MUST try!'
     },
-    {
+     {
       id: '8',
+      title: 'Full body workout',
+      category: 'Full body Workouts',
+      videoUrl: '/videos/Full body workout - featured.mp4',
+    },
+    {
+      id: '9',
       title: 'Full body friday workout',
       category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout.mp4',
     },
     {
-      id: '9',
+      id: '10',
       title: 'Full body friday workout v2',
       category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout v2.mp4',
     },
     {
-      id: '10',
+      id: '11',
       title: 'Full body friday workout v3',
       category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout v3.mp4',
     },
     {
-      id: '11',
+      id: '12',
       title: 'Full body friday workout v4',
       category: 'Full body Workouts',
       videoUrl: '/videos/Full body friday workout v4.mp4',
     },
     {
-      id: '12',
+      id: '13',
       title: 'Full body weekend workout',
       category: 'Full body Workouts',
       videoUrl: '/videos/Full body weekend workout.mp4',
     },
     {
-      id: '13',
+      id: '14',
       title: 'KB Full body workout',
       category: 'Full body Workouts',
       videoUrl: '/videos/KB Full body friday workout.mp4',
     },
     {
-      id: '14',
+      id: '15',
       title: 'Med Ball Full body workout',
       category: 'Full body Workouts',
       videoUrl: '/videos/Med Ball Full body workout.mp4',
     },
     {
-      id: '15',
+      id: '16',
       title: 'Crazy shoulder blast',
       category: 'Push Workouts',
       videoUrl: '/videos/Crazy shoulder blast.mp4',
     },
     {
-      id: '16',
+      id: '17',
       title: 'Upper body workout',
       category: 'Push Workouts',
       videoUrl: '/videos/Upper body workout.mp4',
     },
     {
-      id: '17',
+      id: '18',
       title: 'Strict Chest Workout',
       category: 'Push Workouts',
       videoUrl: '/videos/Strict Chest Workout.mp4',
     },
     {
-      id: '18',
+      id: '19',
       title: 'DB Upper Body Workout',
       category: 'Push Workouts',
       videoUrl: '/videos/DB Upper Body Workout.mp4',
     },
     {
-      id: '19',
+      id: '20',
       title: 'KB Leg Circuit',
       category: 'Leg Workouts',
       videoUrl: '/videos/KB Leg Circuit.mp4',
     },
     {
-      id: '20',
+      id: '21',
       title: 'Leg day workout',
       category: 'Leg Workouts',
       videoUrl: '/videos/Leg day workout.mp4',
     },
     {
-      id: '21',
+      id: '22',
       title: 'Underated leg day finisher',
       category: 'Leg Workouts',
       videoUrl: '/videos/Underated leg day finisher.mp4',
     },
     {
-      id: '22',
+      id: '23',
       title: '3 reasons why your not building muscle',
       category: 'Workout tips',
       videoUrl: '/videos/3 reasons why your not building muscle.mp4',
     },
     {
-      id: '23',
+      id: '24',
       title: '5 signs your calories are too low',
       category: 'Workout tips',
       videoUrl: '/videos/5 sign your calories are too low.mp4',
     },
     {
-      id: '24',
+      id: '25',
       title: 'Benefits of kettlebell swings',
       category: 'Workout tips',
       videoUrl: '/videos/Benefits of kettlebell swings.mp4',
     },
     {
-      id: '25',
+      id: '26',
       title: 'Benefits of pulse movements',
       category: 'Workout tips',
       videoUrl: '/videos/Benefits of pulse movements.mp4',
     },
     {
-      id: '26',
+      id: '27',
       title: 'Why training hamstrings is so important',
       category: 'Workout tips',
       videoUrl: '/videos/Why training hamstrings is so important.mp4',
@@ -251,8 +257,19 @@ export function WorkoutVideos() {
   const currentVideos = filteredVideos.slice(startIndex, endIndex)
 
   useEffect(() => {
-    setCurrentPage(1)
+  setCurrentPage(1)
+
+  // Reset selected video to the first video of the new category
+  if (selectedCategory === "All") {
+    setSelectedVideo(videos[0])
+  } else {
+    const firstInCategory = videos.find(v => v.category === selectedCategory)
+    setSelectedVideo(firstInCategory || null)
+  }
+
+  setIsPlaying(false) // optional, pause video when switching category
   }, [selectedCategory])
+
 
   const featuredVideo = selectedVideo || videos[0]
 
