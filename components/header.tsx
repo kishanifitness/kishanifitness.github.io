@@ -39,7 +39,7 @@ export function Header() {
             onClick={() => scrollToSection('hero')}
             className="text-xl font-bold text-white hover:text-gray-300 transition-colors"
           >
-            BODY BY KISHANI
+            KISHANI FITNESS
           </button>
 
           {/* Desktop Navigation */}

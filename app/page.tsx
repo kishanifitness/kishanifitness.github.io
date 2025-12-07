@@ -15,9 +15,9 @@ export default function Home() {
       <Header />
       <HeroSection />
       <HowItWorks />
-      <WhyTrainWithKian />
-      <WorkoutVideos />
       <Programs />
+      <WorkoutVideos />
+      <WhyTrainWithKian />
       <Transformations />
       <Footer />
     </main>
