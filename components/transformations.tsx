@@ -15,22 +15,22 @@ export function Transformations() {
     {
       name: "",
       image: "/images/client-transformations-1.jpeg",
-      testimonial: ""
+      testimonial: "Testimonial"
     },
     {
       name: "",
       image: "/images/client-transformations-2.jpeg",
-      testimonial: ""
+      testimonial: "Testimonial"
     },
     {
       name: "",
       image: "/images/client-transformations-3.jpeg",
-      testimonial: ""
+      testimonial: "Testimonial"
     },
     {
       name: "",
       image: "/images/client-transformations-4.jpeg",
-      testimonial: ""
+      testimonial: "Testimonial"
     },
     {
       name: "Client",

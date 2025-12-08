@@ -1,10 +1,12 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { ChevronRight, ChevronLeft } from 'lucide-react'
+import type React from "react"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { ChevronRight, ChevronLeft } from "lucide-react"
 
 type FormData = {
   goal: string
@@ -13,51 +15,50 @@ type FormData = {
   name: string
   email: string
   instagram: string
+  location: string
 }
 
 export function SignUpForm() {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
-    goal: '',
-    gender: '',
-    ageGroup: '',
-    name: '',
-    email: '',
-    instagram: '',
+    goal: "",
+    gender: "",
+    ageGroup: "",
+    name: "",
+    email: "",
+    instagram: "",
+    location: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<{
-    type: 'success' | 'error' | null
+    type: "success" | "error" | null
     message: string
-  }>({ type: null, message: '' })
+  }>({ type: null, message: "" })
 
-  const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScmZ1wEKBcO_9Gccl0tCtAGig6VCiuULQsJjJxKcILYwm5ttQ/formResponse'
-  
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScmZ1wEKBcO_9Gccl0tCtAGig6VCiuULQsJjJxKcILYwm5ttQ/formResponse"
+
   const FIELD_IDS = {
-    goal: 'entry.2038218655',
-    gender: 'entry.1483009977',
-    ageGroup: 'entry.1903635743',
-    name: 'entry.265379145',
-    email: 'entry.580166004',
-    instagram: 'entry.1495233114',
+    goal: "entry.2038218655",
+    gender: "entry.1483009977",
+    ageGroup: "entry.1903635743",
+    name: "entry.265379145",
+    email: "entry.580166004",
+    instagram: "entry.1495233114",
+    location: "entry.1902341223",
   }
 
-  const goals = [
-    'Build Muscle',
-    'Lose Fat',
-    'Get Strong',
-    'Athletic Performance',
-    'General Fitness',
-  ]
+  const goals = ["Build Muscle", "Lose Fat", "Get Strong", "Athletic Performance", "General Fitness"]
 
-  const genders = ['Male', 'Female', 'Other']
+  const genders = ["Male", "Female"]
 
-  const ageGroups = ['Under 18', '18-21', '22-29', '30+']
+  const ageGroups = ["Under 18", "18-21", "22-29", "30+"]
+
+  const locations = ["Las Vegas", "Southern California", "Other"]
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setSubmitStatus({ type: null, message: '' })
+    setSubmitStatus({ type: null, message: "" })
 
     const googleFormData = new FormData()
     googleFormData.append(FIELD_IDS.goal, formData.goal)
@@ -66,33 +67,35 @@ export function SignUpForm() {
     googleFormData.append(FIELD_IDS.name, formData.name)
     googleFormData.append(FIELD_IDS.email, formData.email)
     googleFormData.append(FIELD_IDS.instagram, formData.instagram)
+    googleFormData.append(FIELD_IDS.location, formData.location)
 
     try {
       await fetch(GOOGLE_FORM_URL, {
-        method: 'POST',
+        method: "POST",
         body: googleFormData,
-        mode: 'no-cors',
+        mode: "no-cors",
       })
 
       setSubmitStatus({
-        type: 'success',
+        type: "success",
         message: "Thank you! We'll contact you within 24 hours.",
       })
 
       setFormData({
-        goal: '',
-        gender: '',
-        ageGroup: '',
-        name: '',
-        email: '',
-        instagram: '',
+        goal: "",
+        gender: "",
+        ageGroup: "",
+        name: "",
+        email: "",
+        instagram: "",
+        location: "",
       })
       setStep(1)
     } catch (error) {
-      console.error('Form submission error:', error)
+      console.error("Form submission error:", error)
       setSubmitStatus({
-        type: 'error',
-        message: 'Sorry, there was an error. Please try again or contact us directly.',
+        type: "error",
+        message: "Sorry, there was an error. Please try again or contact us directly.",
       })
     } finally {
       setIsSubmitting(false)
@@ -105,18 +108,15 @@ export function SignUpForm() {
     <div className="space-y-6">
       {/* Progress Bar */}
       <div className="w-full bg-gray-200 rounded-full h-2">
-        <div
-          className="bg-black h-2 rounded-full transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
+        <div className="bg-black h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
       </div>
 
       {submitStatus.type && (
         <div
           className={`p-4 rounded-lg ${
-            submitStatus.type === 'success'
-              ? 'bg-green-100 text-green-800 border border-green-200'
-              : 'bg-red-100 text-red-800 border border-red-200'
+            submitStatus.type === "success"
+              ? "bg-green-100 text-green-800 border border-green-200"
+              : "bg-red-100 text-red-800 border border-red-200"
           }`}
         >
           {submitStatus.message}
@@ -127,9 +127,7 @@ export function SignUpForm() {
         {/* Step 1: Fitness Goals */}
         {step === 1 && (
           <div className="space-y-4 animate-fadeIn">
-            <h3 className="text-2xl font-bold text-black text-shadow-sm">
-              What's your primary goal?
-            </h3>
+            <h3 className="text-2xl font-bold text-black text-shadow-sm">What's your primary goal?</h3>
             <div className="grid grid-cols-1 gap-3">
               {goals.map((goal) => (
                 <button
@@ -141,8 +139,8 @@ export function SignUpForm() {
                   }}
                   className={`p-4 rounded-lg border-2 transition-all font-semibold text-left ${
                     formData.goal === goal
-                      ? 'border-black bg-black text-white'
-                      : 'border-gray-800 bg-white/90 hover:border-black text-black md:border-gray-300 md:bg-transparent'
+                      ? "border-black bg-black text-white"
+                      : "border-gray-800 bg-white/90 hover:border-black text-black md:border-gray-300 md:bg-transparent"
                   }`}
                 >
                   {goal}
@@ -167,8 +165,8 @@ export function SignUpForm() {
                   }}
                   className={`p-4 rounded-lg border-2 transition-all font-semibold ${
                     formData.gender === gender
-                      ? 'border-black bg-black text-white'
-                      : 'border-gray-800 bg-white/90 hover:border-black text-black md:border-gray-300 md:bg-transparent'
+                      ? "border-black bg-black text-white"
+                      : "border-gray-800 bg-white/90 hover:border-black text-black md:border-gray-300 md:bg-transparent"
                   }`}
                 >
                   {gender}
@@ -201,8 +199,8 @@ export function SignUpForm() {
                   }}
                   className={`p-4 rounded-lg border-2 transition-all font-semibold ${
                     formData.ageGroup === age
-                      ? 'border-black bg-black text-white'
-                      : 'border-gray-800 bg-white/90 hover:border-black text-black md:border-gray-300 md:bg-transparent'
+                      ? "border-black bg-black text-white"
+                      : "border-gray-800 bg-white/90 hover:border-black text-black md:border-gray-300 md:bg-transparent"
                   }`}
                 >
                   {age}
@@ -220,12 +218,10 @@ export function SignUpForm() {
           </div>
         )}
 
-        {/* Step 4: Contact Info */}
+        {/* Step 4: Contact Info and Location */}
         {step === 4 && (
           <div className="space-y-4 animate-fadeIn">
-            <h3 className="text-2xl font-bold text-black text-shadow-sm">
-              Let's get in touch
-            </h3>
+            <h3 className="text-2xl font-bold text-black text-shadow-sm">Let's get in touch</h3>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="name" className="text-black font-semibold text-shadow-sm">
@@ -236,9 +232,7 @@ export function SignUpForm() {
                   type="text"
                   required
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="mt-1 bg-white/95 border-gray-800 md:bg-transparent md:border-gray-300"
                   placeholder="John Doe"
                 />
@@ -252,9 +246,7 @@ export function SignUpForm() {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="mt-1 bg-white/95 border-gray-800 md:bg-transparent md:border-gray-300"
                   placeholder="john@example.com"
                 />
@@ -267,12 +259,30 @@ export function SignUpForm() {
                   id="instagram"
                   type="text"
                   value={formData.instagram}
-                  onChange={(e) =>
-                    setFormData({ ...formData, instagram: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
                   className="mt-1 bg-white/95 border-gray-800 md:bg-transparent md:border-gray-300"
                   placeholder="@username"
                 />
+              </div>
+              {/* Location selection added to Step 4 */}
+              <div>
+                <Label htmlFor="location" className="text-black font-semibold text-shadow-sm">
+                  Where are you located? *
+                </Label>
+                <select
+                  id="location"
+                  required
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  className="w-full mt-1 p-2 rounded-lg border-2 border-gray-800 bg-white/95 text-black font-semibold md:bg-transparent md:border-gray-300"
+                >
+                  <option value="">Select a location</option>
+                  {locations.map((location) => (
+                    <option key={location} value={location}>
+                      {location}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className="flex gap-3">
@@ -286,10 +296,10 @@ export function SignUpForm() {
               </Button>
               <Button
                 type="submit"
-                disabled={isSubmitting}
-                className="flex-1 bg-black text-white hover:bg-gray-800"
+                disabled={isSubmitting || !formData.location}
+                className="flex-1 bg-black text-white hover:bg-gray-800 disabled:opacity-50"
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {isSubmitting ? "Submitting..." : "Submit"}
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>

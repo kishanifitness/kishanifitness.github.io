@@ -15,7 +15,7 @@ export function WhyTrainWithKian() {
               className="w-full h-[900px] md:h-[1000px] object-cover rounded-lg shadow-lg"
             />
             <blockquote className="text-lg md:text-xl text-gray-700 leading-relaxed text-pretty">
-              "I've been in your shoes — frustrated with slow progress, unsure which path works, and craving results that actually stick. That experience fueled my approach: a system built around your life, your goals, and your schedule, helping you push past plateaus and reach your potential."
+              "I've been in your shoes, frustrated with slow progress, unsure which path works, and craving results that actually stick. That experience fueled my approach: a system built around your life, your goals, and your schedule, helping you push past plateaus and reach your potential."
             </blockquote>
           </div>
         </div>
@@ -26,7 +26,7 @@ export function WhyTrainWithKian() {
             {/* Text on left for desktop */}
             <div className="order-2 lg:order-1">
               <blockquote className="text-lg md:text-xl text-gray-700 leading-relaxed text-pretty">
-                "Your goals are unique, and so is my coaching. Work with me 1-on-1 to create a program that fits your body, lifestyle, and mindset. Together, we'll build strength, confidence, and habits that last — not just a quick transformation, but a sustainable one."
+                "Your goals are unique, and so is my coaching. Work with me 1-on-1 to create a program that fits your body, lifestyle, and mindset. Together, we'll build strength, confidence, and habits that last, not just a quick transformation, but a sustainable one."
               </blockquote>
             </div>
             

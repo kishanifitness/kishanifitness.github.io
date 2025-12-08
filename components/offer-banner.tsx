@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export function OfferBanner() {
   const DEADLINE = "2025-12-31T23:59:59"
-  const SPOTS_LEFT = 20
+  const SPOTS_LEFT = 13
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
