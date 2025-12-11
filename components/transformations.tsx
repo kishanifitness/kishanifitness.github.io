@@ -28,9 +28,9 @@ export function Transformations() {
       testimonial: "What I appreciate most about Kian is how personalized everything is. He didn't give me a one size fits all plan. He understood my goals, my schedule, and my struggles. Because of that, I've been able to stay consistent and see real progress."
     },
     {
-      name: "",
+      name: "KIAN'S TRANSFORMATION",
       image: "/images/client-transformations-4.jpeg",
-      testimonial: "I've tried so many programs before, but Kian's coaching was the only one that truly clicked for me. He pushed me just enough, kept me accountable, and made the whole process enjoyable. The results came faster than I expected."
+      testimonial: "I've been stuck before. I've been in your shoes, but I made that change and figured out what really works."
     },
     {
       name: "",
