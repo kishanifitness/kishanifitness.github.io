@@ -15,27 +15,27 @@ export function Transformations() {
     {
       name: "",
       image: "/images/client-transformations-1.jpeg",
-      testimonial: "Testimonial"
+      testimonial: "Kian's training not only helped me  get leaner and stronger to reach my goals, but he also helped me create consistent healthy habits and routines to change my lifestyle!"
     },
     {
       name: "",
       image: "/images/client-transformations-2.jpeg",
-      testimonial: "Testimonial"
+      testimonial: "Kian didn't just give me a workout plan. He taught me how to actually stay consistent. I feel stronger, more confident, and for the first time, I'm not stressing about my fitness because it finally fits my lifestyle."
     },
     {
       name: "",
       image: "/images/client-transformations-3.jpeg",
-      testimonial: "Testimonial"
+      testimonial: "What I appreciate most about Kian is how personalized everything is. He didn't give me a one size fits all plan. He understood my goals, my schedule, and my struggles. Because of that, I've been able to stay consistent and see real progress."
     },
     {
       name: "",
       image: "/images/client-transformations-4.jpeg",
-      testimonial: "Testimonial"
+      testimonial: "I've tried so many programs before, but Kian's coaching was the only one that truly clicked for me. He pushed me just enough, kept me accountable, and made the whole process enjoyable. The results came faster than I expected."
     },
     {
-      name: "Client",
+      name: "",
       image: "/images/client-transformations-5.jpeg",
-      testimonial: "Kian's guidance helped me break through plateaus and reach goals I'd been chasing for years.",
+      testimonial: "Working with Kian changed the way I look at fitness. I used to force myself to train, but now I actually look forward to it. I feel healthier, lighter, and more in control of my habits",
     },
   ]
 

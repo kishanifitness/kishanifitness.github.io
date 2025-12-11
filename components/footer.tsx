@@ -67,19 +67,19 @@ export function Footer() {
               <li className="flex items-center gap-2 text-gray-400">
                 <Mail size={16} />
                 <a
-                  href="mailto:coach@kianishani.com"
+                  href="mailto:Kishanifitness@gmail.com"
                   className="hover:text-white transition-colors"
                 >
-                  coach@kianishani.com
+                  Kishanifitness@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2 text-gray-400">
                 <Phone size={16} />
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+949-685-5553"
                   className="hover:text-white transition-colors"
                 >
-                  (123) 456-7890
+                  949-685-5553
                 </a>
               </li>
             </ul>
