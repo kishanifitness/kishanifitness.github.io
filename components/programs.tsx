@@ -174,8 +174,8 @@ export function Programs() {
 
             {/* Full width video */}
             <div className="relative aspect-video bg-black w-full">
-              <video controls className="w-full h-full" poster="/coach-video-thumbnail.jpg">
-                <source src="/coach-intro.mp4" type="video/mp4" />
+              <video controls className="w-full h-full" poster="/images/coach-video-thumbnail.jpeg">
+                <source src="/videos/coach-intro.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
