@@ -2,10 +2,38 @@
 
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
 export function Programs() {
   const [expandedWeek, setExpandedWeek] = useState<number | null>(null)
+
+  // VIDEO THUMBNAIL REFS & STATE
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [videoPoster, setVideoPoster] = useState("")
+
+  useEffect(() => {
+    const video = videoRef.current
+    const canvas = canvasRef.current
+    if (!video || !canvas) return
+
+    const captureThumbnail = () => {
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+
+      const ctx = canvas.getContext("2d")
+      if (!ctx) return
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+      setVideoPoster(canvas.toDataURL("image/jpeg"))
+    }
+
+    video.addEventListener("loadeddata", captureThumbnail)
+
+    return () => {
+      video.removeEventListener("loadeddata", captureThumbnail)
+    }
+  }, [])
 
   const scrollToHero = () => {
     const element = document.getElementById("hero")
@@ -73,56 +101,16 @@ export function Programs() {
     price: 98,
     description: "Build lean muscle and shed fat with our most comprehensive program",
     weeks: [
-      {
-        week: 1,
-        title: "Foundation",
-        focus: "Movement patterns & form",
-      },
-      {
-        week: 2,
-        title: "Strength Building",
-        focus: "Progressive overload begins",
-      },
-      {
-        week: 3,
-        title: "Hypertrophy Phase",
-        focus: "Muscle growth focus",
-      },
-      {
-        week: 4,
-        title: "Deload Week",
-        focus: "Recovery & adaptation",
-      },
-      {
-        week: 5,
-        title: "Power Development",
-        focus: "Explosive movements",
-      },
-      {
-        week: 6,
-        title: "Muscle Endurance",
-        focus: "Higher volume training",
-      },
-      {
-        week: 7,
-        title: "Peak Strength",
-        focus: "Maximum intensity",
-      },
-      {
-        week: 8,
-        title: "Metabolic Conditioning",
-        focus: "Fat loss acceleration",
-      },
-      {
-        week: 9,
-        title: "Final Push",
-        focus: "All-out effort",
-      },
-      {
-        week: 10,
-        title: "Transformation Week",
-        focus: "Reveal your results",
-      },
+      { week: 1, title: "Foundation", focus: "Movement patterns & form" },
+      { week: 2, title: "Strength Building", focus: "Progressive overload begins" },
+      { week: 3, title: "Hypertrophy Phase", focus: "Muscle growth focus" },
+      { week: 4, title: "Deload Week", focus: "Recovery & adaptation" },
+      { week: 5, title: "Power Development", focus: "Explosive movements" },
+      { week: 6, title: "Muscle Endurance", focus: "Higher volume training" },
+      { week: 7, title: "Peak Strength", focus: "Maximum intensity" },
+      { week: 8, title: "Metabolic Conditioning", focus: "Fat loss acceleration" },
+      { week: 9, title: "Final Push", focus: "All-out effort" },
+      { week: 10, title: "Transformation Week", focus: "Reveal your results" },
     ],
   }
 
@@ -159,8 +147,12 @@ export function Programs() {
   return (
     <section id="programs" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-black mb-2">Build Your Perfect Body</h2>
-        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">Choose the program that matches your goals</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-black mb-2">
+          Build Your Perfect Body
+        </h2>
+        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+          Choose the program that matches your goals
+        </p>
 
         <div className="max-w-5xl mx-auto">
           <div className="bg-black text-white rounded-xl overflow-hidden shadow-xl mb-8">
@@ -172,16 +164,19 @@ export function Programs() {
               <p className="text-gray-300 text-lg">{featuredProgram.description}</p>
             </div>
 
-            {/* Full width video */}
-             <div className="relative w-full bg-black">
+            {/* Full width video with dynamic thumbnail */}
+            <div className="relative w-full bg-black">
               <video
+                ref={videoRef}
                 controls
+                preload="metadata"
+                poster={videoPoster}
                 className="w-full h-auto object-contain"
-                poster="/images/coach-video-thumbnail.jpeg"
               >
                 <source src="/videos/coach-intro.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
+              <canvas ref={canvasRef} className="hidden" />
             </div>
 
             {/* Pricing and CTA below video */}
@@ -203,8 +198,11 @@ export function Programs() {
             </div>
           </div>
 
+          {/* Program Inclusions */}
           <div className="bg-white rounded-xl p-8 shadow-lg mb-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-black mb-6">What You Get When You Sign Up:</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-black mb-6">
+              What You Get When You Sign Up:
+            </h3>
             <div className="space-y-4">
               {programInclusions.map((inclusion, index) => (
                 <div key={index} className="flex items-start gap-3">
@@ -220,6 +218,7 @@ export function Programs() {
             </div>
           </div>
 
+          {/* 1-on-1 Program */}
           <div className="bg-black text-white rounded-xl p-8 shadow-xl mb-12">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1">
@@ -245,11 +244,15 @@ export function Programs() {
               </div>
             </div>
           </div>
-          
-          {/* More Programs Section */}
+
+          {/* More Programs Coming Soon */}
           <div>
-            <h3 className="text-2xl font-bold text-center text-black mb-2">More Programs Coming Soon</h3>
-            <p className="text-center text-gray-600 mb-6">Exciting new programs launching soon. Stay tuned!</p>
+            <h3 className="text-2xl font-bold text-center text-black mb-2">
+              More Programs Coming Soon
+            </h3>
+            <p className="text-center text-gray-600 mb-6">
+              Exciting new programs launching soon. Stay tuned!
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               {comingSoonPrograms.map((program, index) => (
