@@ -193,7 +193,9 @@ export function Programs() {
                 </div>
 
                 <Button
-                  onClick={scrollToHero}
+                  onClick={() => {
+                    window.location.href = "https://buy.stripe.com/6oUcN4gNbbCifBO1dU8N200";
+                  }}
                   className="w-full sm:w-auto bg-white text-black hover:bg-gray-100 font-bold py-6 px-12 text-lg rounded-lg transition-all"
                 >
                   Get Started Now
