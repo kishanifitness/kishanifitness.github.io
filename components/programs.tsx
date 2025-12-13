@@ -13,27 +13,31 @@ export function Programs() {
   const [videoPoster, setVideoPoster] = useState("")
 
   useEffect(() => {
-    const video = videoRef.current
-    const canvas = canvasRef.current
-    if (!video || !canvas) return
+  const video = videoRef.current
+  const canvas = canvasRef.current
+  if (!video || !canvas) return
 
-    const captureThumbnail = () => {
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
+  const captureThumbnail = () => {
+    video.currentTime = 0.5 // jump to 0.5s to avoid black frame
+  }
 
-      const ctx = canvas.getContext("2d")
-      if (!ctx) return
+  const generatePoster = () => {
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+    setVideoPoster(canvas.toDataURL("image/jpeg"))
+  }
 
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
-      setVideoPoster(canvas.toDataURL("image/jpeg"))
-    }
+  video.addEventListener("loadedmetadata", captureThumbnail)
+  video.addEventListener("seeked", generatePoster)
 
-    video.addEventListener("loadeddata", captureThumbnail)
-
-    return () => {
-      video.removeEventListener("loadeddata", captureThumbnail)
-    }
-  }, [])
+  return () => {
+    video.removeEventListener("loadedmetadata", captureThumbnail)
+    video.removeEventListener("seeked", generatePoster)
+  }
+}, [])
 
   const scrollToHero = () => {
     const element = document.getElementById("hero")
