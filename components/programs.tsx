@@ -2,42 +2,10 @@
 
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState, useRef, useEffect } from "react"
+import { useState } from "react"
 
 export function Programs() {
   const [expandedWeek, setExpandedWeek] = useState<number | null>(null)
-
-  // VIDEO THUMBNAIL REFS & STATE
-  const videoRef = useRef<HTMLVideoElement | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [videoPoster, setVideoPoster] = useState("")
-
-  useEffect(() => {
-  const video = videoRef.current
-  const canvas = canvasRef.current
-  if (!video || !canvas) return
-
-  const captureThumbnail = () => {
-    video.currentTime = 0.5 // jump to 0.5s to avoid black frame
-  }
-
-  const generatePoster = () => {
-    canvas.width = video.videoWidth
-    canvas.height = video.videoHeight
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
-    setVideoPoster(canvas.toDataURL("image/jpeg"))
-  }
-
-  video.addEventListener("loadedmetadata", captureThumbnail)
-  video.addEventListener("seeked", generatePoster)
-
-  return () => {
-    video.removeEventListener("loadedmetadata", captureThumbnail)
-    video.removeEventListener("seeked", generatePoster)
-  }
-}, [])
 
   const scrollToHero = () => {
     const element = document.getElementById("hero")
@@ -168,19 +136,12 @@ export function Programs() {
               <p className="text-gray-300 text-lg">{featuredProgram.description}</p>
             </div>
 
-            {/* Full width video with dynamic thumbnail */}
-            <div className="relative w-full bg-black">
-              <video
-                ref={videoRef}
-                controls
-                preload="metadata"
-                poster={videoPoster}
-                className="w-full h-auto object-contain"
-              >
-                <source src="/videos/coach-intro.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <canvas ref={canvasRef} className="hidden" />
+            {/* Full width video with static thumbnail */}
+            <div className="relative w-full bg-black"> 
+              <video controls className="w-full h-auto object-contain" poster="/images/coach-video-thumbnail.jpeg" > 
+              <source src="/videos/coach-intro.mp4" type="video/mp4" /> 
+              Your browser does not support the video tag. 
+              </video> 
             </div>
 
             {/* Pricing and CTA below video */}
